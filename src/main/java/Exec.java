@@ -16,6 +16,7 @@ public class Exec {
 
             JButton login = new JButton("Faça login");
             JButton cad = new JButton("Cadastre-se");
+            JButton esq = new JButton("Esqueci a senha");
 
             login.setAlignmentX(Component.CENTER_ALIGNMENT);
             cad.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -25,6 +26,8 @@ public class Exec {
             mainPanel.add(Box.createVerticalStrut(30));
             mainPanel.add(login);
             mainPanel.add(cad);
+            mainPanel.add(esq);
+
 
             login.addActionListener(e -> new TelaLogin());
             cad.addActionListener(e -> new TelaCadastro());
