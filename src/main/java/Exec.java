@@ -1,23 +1,38 @@
-// Exec.java
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 
 public class Exec {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Janela Hello");
+            JFrame frame = new JFrame("Gym App");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            JLabel label = new JLabel("hello world!", SwingConstants.CENTER);
-            label.setFont(new Font("SansSerif", Font.PLAIN, 24));
+            JPanel mainPanel = new JPanel();
+            mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-            frame.getContentPane().add(label);
-            frame.setSize(350, 150);
+            JLabel label = new JLabel("Bem vindo ao seu sistema de Exercícios", SwingConstants.CENTER);
+            label.setFont(new Font("SansSerif", Font.PLAIN, 24));
+            label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton login = new JButton("Faça login");
+            JButton cad = new JButton("Cadastre-se");
+
+            login.setAlignmentX(Component.CENTER_ALIGNMENT);
+            cad.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            mainPanel.add(Box.createVerticalStrut(50));
+            mainPanel.add(label);
+            mainPanel.add(Box.createVerticalStrut(30));
+            mainPanel.add(login);
+            mainPanel.add(cad);
+
+            login.addActionListener(e -> new TelaLogin());
+            cad.addActionListener(e -> new TelaCadastro());
+
+            frame.setContentPane(mainPanel);
+            frame.setSize(800, 600);
+            frame.setLocationRelativeTo(null);
             frame.setResizable(false);
-            frame.setLocationRelativeTo(null); // centraliza na tela
             frame.setVisible(true);
         });
     }
