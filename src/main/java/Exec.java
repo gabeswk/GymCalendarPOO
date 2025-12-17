@@ -23,7 +23,7 @@ public class Exec {
             // ----- Link "Esqueci a senha" -----
             JLabel esq = new JLabel("Esqueci a senha");
             esq.setForeground(new Color(0, 102, 204));
-
+//AAAAAAAAA
             Font baseFont = esq.getFont();
             Map<TextAttribute, Object> map = new HashMap<>(baseFont.getAttributes());
             map.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
