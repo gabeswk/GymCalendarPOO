@@ -19,7 +19,7 @@ public class Exec {
 
             JButton login = new JButton("Faça login");
             JButton cad = new JButton("Cadastre-se");
-
+//bbbbbbb
             // ----- Link "Esqueci a senha" -----
             JLabel esq = new JLabel("Esqueci a senha");
             esq.setForeground(new Color(0, 102, 204));
