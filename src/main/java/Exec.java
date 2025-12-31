@@ -1,3 +1,4 @@
+import ui.Estilo;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
@@ -7,6 +8,7 @@ import java.util.Map;
 public class Exec {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
+            Estilo.aplicar();
             JFrame frame = new JFrame("Gym App");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
