@@ -5,6 +5,10 @@ public class EsqueciSenha extends JFrame {
 
     public EsqueciSenha() {
 
+        //Icone que fica no canto
+        Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+        setIconImage(icon);
+
         setTitle("Recuperar Senha");
         setSize(400, 250);
         setLocationRelativeTo(null);
