@@ -54,15 +54,15 @@ public class TelaLogin extends JFrame {
             Usuario usuario = RepositorioUsuarios.buscarPorEmail(email);
 
             if (usuario == null) {
-                JOptionPane.showMessageDialog(this, "Usuário não encontrado!");
+                DialogoEscuro.mostrarErro(this, "Usuário não encontrado!");
                 return;
             }
             if (!usuario.getSenha().equals(senha)) {
-                JOptionPane.showMessageDialog(this, "Senha incorreta!");
+                DialogoEscuro.mostrarMensagem(this, "Senha incorreta!");
                 return;
             }
-
-            JOptionPane.showMessageDialog(this, "Login realizado!");
+            DialogoEscuro.mostrarMensagem(this, "Login realizado!");
+            //JOptionPane.showMessageDialog(this, "Login realizado!");
 
             // Fecha somente ao logar
             dispose();           // Fecha a TelaLogin

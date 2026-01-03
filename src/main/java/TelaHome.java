@@ -247,17 +247,18 @@ public class TelaHome extends JFrame {
             painelDireito.add(botoesPanel);
 
             btnAdd.addActionListener(e -> {
-                String nome = JOptionPane.showInputDialog(this, "Nome do exercício:");
+                //String nome = JOptionPane.showInputDialog(this, "Nome do exercício:");
+                String nome = DialogoEscuro.mostrarInput(this, "Nome do exercício:");
                 if (nome == null || nome.isEmpty()) return;
-                String sSeries = JOptionPane.showInputDialog(this, "Séries:");
-                String sReps = JOptionPane.showInputDialog(this, "Repetições:");
+                String sSeries = DialogoEscuro.mostrarInput(this, "Séries:");
+                String sReps = DialogoEscuro.mostrarInput(this, "Repetições:");
                 try {
                     int series = Integer.parseInt(sSeries);
                     int reps = Integer.parseInt(sReps);
                     treino.adicionarExercicio(new Exercicio(nome, series, reps));
                     atualizarPainelDireito(dia);
                 } catch (Exception err) {
-                    JOptionPane.showMessageDialog(this, "Erro: valores inválidos.");
+                    DialogoEscuro.mostrarErro(this, "Erro: valores inválidos.");
                 }
             });
 
@@ -273,16 +274,20 @@ public class TelaHome extends JFrame {
                 int idx = listaEx.getSelectedIndex();
                 if (idx < 0) return;
                 Exercicio ex = treino.getExercicios().get(idx);
-                String novoNome = JOptionPane.showInputDialog(this, "Nome:", ex.getNome());
-                String novasSeries = JOptionPane.showInputDialog(this, "Séries:", ex.getSeries());
-                String novasReps = JOptionPane.showInputDialog(this, "Repetições:", ex.getRepeticoes());
+                //String novoNome = JOptionPane.showInputDialog(this, "Nome:", ex.getNome());
+                String novoNome = DialogoEscuro.mostrarInput(this, "Nome:", ex.getNome());
+                //String novasSeries = JOptionPane.showInputDialog(this, "Séries:", ex.getSeries());
+                String novasSeries = DialogoEscuro.mostrarInput(this, "Séries:", String.valueOf(ex.getSeries()));
+                //String novasReps = JOptionPane.showInputDialog(this, "Repetições:", ex.getRepeticoes());
+                String novasReps = DialogoEscuro.mostrarInput(this, "Repetições:", String.valueOf(ex.getRepeticoes()));
                 try {
                     ex.setNome(novoNome);
                     ex.setSeries(Integer.parseInt(novasSeries));
                     ex.setRepeticoes(Integer.parseInt(novasReps));
                     atualizarPainelDireito(dia);
                 } catch (Exception err) {
-                    JOptionPane.showMessageDialog(this, "Erro ao editar.");
+                    //JOptionPane.showMessageDialog(this, "Erro ao editar.");
+                    DialogoEscuro.mostrarErro(this, "Erro ao editar.");
                 }
             });
 
@@ -296,18 +301,20 @@ public class TelaHome extends JFrame {
     }
 
     private void abrirDialogCadastrarTreino(LocalDate startDate) {
-        String nomeTreino = JOptionPane.showInputDialog(this, "Nome do treino (ex: Peito, Costas, Perna):");
+        //String nomeTreino = JOptionPane.showInputDialog(this, "Nome do treino (ex: Peito, Costas, Perna):");
+        String nomeTreino = DialogoEscuro.mostrarInput(this, "Nome do treino (ex: Peito, Costas, Perna):");
         if (nomeTreino == null || nomeTreino.isEmpty()) return;
 
-        String sFreq = JOptionPane.showInputDialog(this,
-                "A cada quantos dias se repete? (2 a 7) — tempo de repetição por 4 semanas:");
+        //String sFreq = JOptionPane.showInputDialog(this, "A cada quantos dias se repete? (2 a 7) — tempo de repetição por 4 semanas:");
+        String sFreq = DialogoEscuro.mostrarInput(this, "A cada quantos dias se repete? (2 a 7):");
 
         int freq;
         try {
             freq = Integer.parseInt(sFreq);
             if (freq < 1 || freq > 7) throw new Exception();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Frequência inválida!");
+            //JOptionPane.showMessageDialog(this, "Frequência inválida!");
+            DialogoEscuro.mostrarErro(this, "Frequência inválida!");
             return;
         }
 
@@ -332,8 +339,8 @@ public class TelaHome extends JFrame {
         // verificar conflito
         for (LocalDate dt : datas) {
             if (RepositorioTreinos.existeTreino(dt)) {
-                JOptionPane.showMessageDialog(this,
-                        "Erro: já existe treino cadastrado em " + dt.toString() + ". Operação cancelada.");
+                //JOptionPane.showMessageDialog(this, "Erro: já existe treino cadastrado em " + dt.toString() + ". Operação cancelada.");
+                DialogoEscuro.mostrarErro(this, "Erro: já existe treino cadastrado em " + dt.toString() + ". Operação cancelada.");
                 return;
             }
         }
@@ -344,7 +351,8 @@ public class TelaHome extends JFrame {
             RepositorioTreinos.salvarTreino(dt, t);
         }
 
-        JOptionPane.showMessageDialog(this, "Treino agendado com sucesso!");
+        //JOptionPane.showMessageDialog(this, "Treino agendado com sucesso!");
+        DialogoEscuro.mostrarMensagem(this, "Treino agendado com sucesso!");
         atualizarPainelDireito(startDate);
     }
 }
