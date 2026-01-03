@@ -5,6 +5,10 @@ public class EsqueciSenha extends JFrame {
 
     public EsqueciSenha() {
 
+        //Icone que fica no canto
+        Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+        setIconImage(icon);
+
         setTitle("Recuperar Senha");
         setSize(400, 250);
         setLocationRelativeTo(null);
@@ -12,6 +16,7 @@ public class EsqueciSenha extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margem interna
 
         JTextField emailField = new JTextField();
         JPasswordField novaSenhaField = new JPasswordField();
@@ -23,10 +28,13 @@ public class EsqueciSenha extends JFrame {
         panel.add(new JLabel("Email cadastrado:"));
         panel.add(emailField);
 
+        panel.add(Box.createVerticalStrut(10));
+
         panel.add(new JLabel("Nova senha:"));
         panel.add(novaSenhaField);
 
-        panel.add(Box.createVerticalStrut(12));
+        panel.add(Box.createVerticalStrut(20));
+        recuperarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         panel.add(recuperarBtn);
 
         add(panel);
@@ -40,6 +48,7 @@ public class EsqueciSenha extends JFrame {
                 return;
             }
 
+            // Busca o usuário no repositório (que carregou do arquivo)
             Usuario usuario = RepositorioUsuarios.buscarPorEmail(email);
 
             if (usuario == null) {
@@ -47,8 +56,11 @@ public class EsqueciSenha extends JFrame {
                 return;
             }
 
-            // ALTERA A SENHA
+            // 1. Altera a senha no objeto em memória
             usuario.setSenha(novaSenha);
+
+            // 2. Salva a alteração no arquivo TXT
+            RepositorioUsuarios.atualizarArquivo();
 
             JOptionPane.showMessageDialog(this, "Senha atualizada com sucesso!");
             dispose();

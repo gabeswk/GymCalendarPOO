@@ -3,6 +3,11 @@ import java.awt.*;
 
 public class TelaCadastro extends JFrame {
     public TelaCadastro(){
+
+        //Icone que fica no canto
+        Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+        setIconImage(icon);
+
         setTitle("Cadastro de usuario");
         setSize(400, 300);
         setLocationRelativeTo(null);
@@ -10,21 +15,34 @@ public class TelaCadastro extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(TemaEscuro.FUNDO);
 
+        // Criar os campos
         JTextField nomeField = new JTextField();
         JTextField emailField = new JTextField();
         JPasswordField senhaField = new JPasswordField();
         JButton cadastrarBtn = new JButton("Cadastrar");
 
-        nomeField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        senhaField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        // Criar as labels
+        JLabel nomeLabel = new JLabel("Nome:");
+        JLabel emailLabel = new JLabel("Email:");
+        JLabel senhaLabel = new JLabel("Senha:");
 
-        panel.add(new JLabel("Nome:"));
+        // Aplicar estilos
+        TemaEscuro.aplicarLabel(nomeLabel);
+        TemaEscuro.aplicarLabel(emailLabel);
+        TemaEscuro.aplicarLabel(senhaLabel);
+        TemaEscuro.aplicarInput(nomeField);
+        TemaEscuro.aplicarInput(emailField);
+        TemaEscuro.aplicarInput(senhaField);
+        TemaEscuro.aplicarBotao(cadastrarBtn);
+
+        // Adicionar componentes na ordem correta
+        panel.add(nomeLabel);
         panel.add(nomeField);
-        panel.add(new JLabel("Email:"));
+        panel.add(emailLabel);
         panel.add(emailField);
-        panel.add(new JLabel("Senha:"));
+        panel.add(senhaLabel);
         panel.add(senhaField);
         panel.add(Box.createVerticalStrut(10));
         panel.add(cadastrarBtn);

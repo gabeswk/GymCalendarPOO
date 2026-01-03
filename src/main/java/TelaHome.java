@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
@@ -14,11 +15,19 @@ public class TelaHome extends JFrame {
     private int mesAtual;
 
     public TelaHome(String usuarioNome) {
+
+        //Icone que fica no canto
+        Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+        setIconImage(icon);
+
         setTitle("Agenda de Treinos - " + usuarioNome);
         setSize(1000, 650);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
+
+        // Define cor de fundo da janela principal (Tema Escuro)
+        getContentPane().setBackground(TemaEscuro.FUNDO);
 
         painelCalendario = new JPanel();
         painelDireito = new JPanel();
@@ -26,10 +35,30 @@ public class TelaHome extends JFrame {
         painelCalendario.setPreferredSize(new Dimension(500, 650));
         painelDireito.setPreferredSize(new Dimension(500, 650));
 
+        // Aplica o fundo nos painéis
+        painelCalendario.setBackground(TemaEscuro.FUNDO);
+        painelDireito.setBackground(TemaEscuro.FUNDO);
+
         painelDireito.setLayout(new BoxLayout(painelDireito, BoxLayout.Y_AXIS));
+        // Adiciona uma margem interna no painel direito para não colar na borda
+        painelDireito.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         add(painelCalendario, BorderLayout.WEST);
-        add(new JScrollPane(painelDireito), BorderLayout.CENTER);
+
+        // ScrollPane com estilo escuro (remove bordas padrão e ajusta fundo)
+        JScrollPane scrollDireito = new JScrollPane(painelDireito);
+
+        // Estilo da Scrollbar
+        scrollDireito.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        scrollDireito.getHorizontalScrollBar().setUI(new CustomScrollBarUI());
+
+        // Deixa a scrollbar mais fina
+        scrollDireito.getVerticalScrollBar().setPreferredSize(new Dimension(10, 0));  // Largura de 10px
+        scrollDireito.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 10));  // Altura de 10px
+
+        scrollDireito.setBorder(null);
+        scrollDireito.getViewport().setBackground(TemaEscuro.FUNDO);
+        add(scrollDireito, BorderLayout.CENTER);
 
         LocalDate hoje = LocalDate.now();
         anoAtual = hoje.getYear();
@@ -44,12 +73,17 @@ public class TelaHome extends JFrame {
     private void montarCalendario(int ano, int mes) {
         painelCalendario.removeAll();
         painelCalendario.setLayout(new BorderLayout());
+        painelCalendario.setBackground(TemaEscuro.FUNDO);
 
         // topo com navegação de mês
         JPanel topo = new JPanel(new FlowLayout());
-        JButton btnAnterior = new JButton("<");
-        JButton btnProximo = new JButton(">");
+        topo.setBackground(TemaEscuro.FUNDO);
+
+        JButton btnAnterior = criarBotaoNavegacao("<");
+        JButton btnProximo = criarBotaoNavegacao(">");
+
         JLabel lblMes = new JLabel(YearMonth.of(ano, mes).getMonth().toString() + " " + ano);
+        TemaEscuro.aplicarLabel(lblMes); // Aplica estilo do texto
 
         topo.add(btnAnterior);
         topo.add(lblMes);
@@ -57,11 +91,15 @@ public class TelaHome extends JFrame {
         painelCalendario.add(topo, BorderLayout.NORTH);
 
         // dias da semana
-        JPanel dias = new JPanel(new GridLayout(0, 7));
+        JPanel dias = new JPanel(new GridLayout(0, 7, 5, 5)); // GridLayout com espaçamento (gap)
+        dias.setBackground(TemaEscuro.FUNDO);
+        dias.setBorder(new EmptyBorder(10, 10, 10, 10)); // Margem ao redor do grid
+
         String[] nomes = {"Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"};
         for (String n : nomes) {
             JLabel l = new JLabel(n, SwingConstants.CENTER);
-            l.setForeground(Color.BLUE.darker());
+            l.setForeground(TemaEscuro.BOTAO); // Cor de destaque para os dias
+            l.setFont(new Font("Segoe UI", Font.BOLD, 12));
             dias.add(l);
         }
 
@@ -70,22 +108,29 @@ public class TelaHome extends JFrame {
         int dayOfWeek = primeiro.getDayOfWeek().getValue(); // 1 = segunda
         int offset = dayOfWeek % 7;
 
+        // Espaços vazios antes do dia 1
         for (int i = 0; i < offset; i++) {
-            dias.add(new JLabel(""));
+            JLabel vazio = new JLabel("");
+            dias.add(vazio);
         }
 
         for (int d = 1; d <= ym.lengthOfMonth(); d++) {
             LocalDate date = LocalDate.of(ano, mes, d);
             JButton b = new JButton("" + d);
+
+            // Estilo manual para os botões do calendário
             b.setMargin(new Insets(2,2,2,2));
             b.setOpaque(true);
             b.setBorderPainted(false);
+            b.setForeground(Color.WHITE);
+            b.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            b.setFocusPainted(false);
 
             TreinoDoDia t = RepositorioTreinos.getTreino(date);
             if (t != null) {
                 b.setBackground(t.getCor());
             } else {
-                b.setBackground(Color.LIGHT_GRAY);
+                b.setBackground(TemaEscuro.CAMPO); // Fundo escuro se vazio
             }
 
             b.addActionListener((ActionEvent e) -> {
@@ -98,26 +143,14 @@ public class TelaHome extends JFrame {
         painelCalendario.add(dias, BorderLayout.CENTER);
 
         btnAnterior.addActionListener(e -> {
-            int m = mes - 1;
-            int a = ano;
-            if (m < 1) {
-                m = 12;
-                a--;
-            }
-            anoAtual = a;
-            mesAtual = m;
+            mesAtual--;
+            if (mesAtual < 1) { mesAtual = 12; anoAtual--; }
             montarCalendario(anoAtual, mesAtual);
         });
 
         btnProximo.addActionListener(e -> {
-            int m = mes + 1;
-            int a = ano;
-            if (m > 12) {
-                m = 1;
-                a++;
-            }
-            anoAtual = a;
-            mesAtual = m;
+            mesAtual++;
+            if (mesAtual > 12) { mesAtual = 1; anoAtual++; }
             montarCalendario(anoAtual, mesAtual);
         });
 
@@ -125,32 +158,52 @@ public class TelaHome extends JFrame {
         painelCalendario.repaint();
     }
 
+    private JButton criarBotaoNavegacao(String texto) {
+        JButton btn = new JButton(texto);
+        btn.setBackground(TemaEscuro.BOTAO);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setBorderPainted(false);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        return btn;
+    }
+
     private void atualizarPainelDireito(LocalDate dia) {
         painelDireito.removeAll();
 
         if (dia == null) {
-            painelDireito.add(new JLabel("Selecione um dia no calendário."));
+            JLabel lbl = new JLabel("Selecione um dia no calendário.");
+            TemaEscuro.aplicarLabel(lbl);
+            painelDireito.add(lbl);
             painelDireito.revalidate();
             painelDireito.repaint();
             return;
         }
 
-        painelDireito.add(new JLabel("📅 Dia: " + dia.toString()));
-        painelDireito.add(Box.createVerticalStrut(15));
+        JLabel lblDia = new JLabel("📅 Dia: " + dia.toString());
+        TemaEscuro.aplicarLabel(lblDia);
+        painelDireito.add(lblDia);
+        painelDireito.add(Box.createVerticalStrut(20));
 
         TreinoDoDia treino = RepositorioTreinos.getTreino(dia);
 
         if (treino == null) {
-            painelDireito.add(new JLabel("Nenhum treino cadastrado para este dia."));
-            painelDireito.add(Box.createVerticalStrut(10));
+            JLabel lblNada = new JLabel("Nenhum treino cadastrado.");
+            TemaEscuro.aplicarLabel(lblNada);
+            painelDireito.add(lblNada);
+            painelDireito.add(Box.createVerticalStrut(15));
 
-            JButton cadastrar = new JButton("Cadastrar treino (individual ou recorrente)");
+            JButton cadastrar = new JButton("Agendar Treino");
+            TemaEscuro.aplicarBotao(cadastrar);
             cadastrar.addActionListener(e -> abrirDialogCadastrarTreino(dia));
 
             painelDireito.add(cadastrar);
 
         } else {
-            painelDireito.add(new JLabel("Treino: " + treino.getDescricao()));
+            JLabel lblTreino = new JLabel("Treino: " + treino.getDescricao());
+            TemaEscuro.aplicarLabel(lblTreino);
+            painelDireito.add(lblTreino);
             painelDireito.add(Box.createVerticalStrut(10));
 
             DefaultListModel<String> modelo = new DefaultListModel<>();
@@ -159,33 +212,55 @@ public class TelaHome extends JFrame {
             }
 
             JList<String> listaEx = new JList<>(modelo);
+            listaEx.setBackground(TemaEscuro.CAMPO);
+            listaEx.setForeground(TemaEscuro.TEXTO);
+            listaEx.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+
             JScrollPane scroll = new JScrollPane(listaEx);
             scroll.setPreferredSize(new Dimension(450, 200));
+            scroll.setBorder(BorderFactory.createLineBorder(TemaEscuro.BORDA));
             painelDireito.add(scroll);
             painelDireito.add(Box.createVerticalStrut(15));
 
-            JButton btnAdd = new JButton("Adicionar exercício");
+            JPanel botoesPanel = new JPanel();
+            botoesPanel.setLayout(new BoxLayout(botoesPanel, BoxLayout.Y_AXIS));
+            botoesPanel.setBackground(TemaEscuro.FUNDO);
+            botoesPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JButton btnAdd = new JButton("Adicionar Exercício");
+            TemaEscuro.aplicarBotao(btnAdd);
+
+            JButton btnRem = new JButton("Remover Selecionado");
+            TemaEscuro.aplicarBotao(btnRem);
+            btnRem.setBackground(new Color(192, 57, 43)); // Vermelho
+
+            JButton btnEdit = new JButton("Editar Selecionado");
+            TemaEscuro.aplicarBotao(btnEdit);
+            btnEdit.setBackground(new Color(211, 84, 0)); // Laranja
+
+            botoesPanel.add(btnAdd);
+            botoesPanel.add(Box.createVerticalStrut(10));
+            botoesPanel.add(btnEdit);
+            botoesPanel.add(Box.createVerticalStrut(10));
+            botoesPanel.add(btnRem);
+
+            painelDireito.add(botoesPanel);
+
             btnAdd.addActionListener(e -> {
                 String nome = JOptionPane.showInputDialog(this, "Nome do exercício:");
                 if (nome == null || nome.isEmpty()) return;
-
                 String sSeries = JOptionPane.showInputDialog(this, "Séries:");
                 String sReps = JOptionPane.showInputDialog(this, "Repetições:");
-
                 try {
                     int series = Integer.parseInt(sSeries);
                     int reps = Integer.parseInt(sReps);
-
                     treino.adicionarExercicio(new Exercicio(nome, series, reps));
                     atualizarPainelDireito(dia);
-
                 } catch (Exception err) {
                     JOptionPane.showMessageDialog(this, "Erro: valores inválidos.");
                 }
             });
-            painelDireito.add(btnAdd);
 
-            JButton btnRem = new JButton("Remover exercício selecionado");
             btnRem.addActionListener(e -> {
                 int idx = listaEx.getSelectedIndex();
                 if (idx >= 0) {
@@ -193,43 +268,30 @@ public class TelaHome extends JFrame {
                     atualizarPainelDireito(dia);
                 }
             });
-            painelDireito.add(btnRem);
 
-            JButton btnEdit = new JButton("Editar exercício selecionado");
             btnEdit.addActionListener(e -> {
                 int idx = listaEx.getSelectedIndex();
                 if (idx < 0) return;
                 Exercicio ex = treino.getExercicios().get(idx);
-
                 String novoNome = JOptionPane.showInputDialog(this, "Nome:", ex.getNome());
                 String novasSeries = JOptionPane.showInputDialog(this, "Séries:", ex.getSeries());
                 String novasReps = JOptionPane.showInputDialog(this, "Repetições:", ex.getRepeticoes());
-
                 try {
                     ex.setNome(novoNome);
                     ex.setSeries(Integer.parseInt(novasSeries));
                     ex.setRepeticoes(Integer.parseInt(novasReps));
                     atualizarPainelDireito(dia);
-
                 } catch (Exception err) {
                     JOptionPane.showMessageDialog(this, "Erro ao editar.");
                 }
             });
-            painelDireito.add(btnEdit);
 
-            JButton btnMark = new JButton("Marcar como realizado");
-            btnMark.addActionListener(e -> {
-                // Aqui você pode marcar feito — por enquanto só muda a cor de fundo
-                JOptionPane.showMessageDialog(this, "Marcado como realizado!");
-                // opcional: poderia remover ou mudar cor
-            });
-            painelDireito.add(btnMark);
+            // Nota: O botão "Marcar como realizado" foi removido nesta versão para simplificar o layout visual,
+            // mas a lógica dele seria similar aos botões acima se quiser reimplementar.
         }
 
         painelDireito.revalidate();
         painelDireito.repaint();
-
-        // Atualiza o calendário para refletir cores
         montarCalendario(anoAtual, mesAtual);
     }
 
@@ -252,10 +314,10 @@ public class TelaHome extends JFrame {
         // definir cor conforme nome do treino
         Color cor;
         switch (nomeTreino.toLowerCase()) {
-            case "peito": cor = Color.BLUE; break;
-            case "costas": cor = Color.RED; break;
-            case "perna": cor = new Color(128, 0, 128); break; // roxo
-            case "ombro": cor = Color.ORANGE; break;
+            case "peito": cor = new Color(52, 152, 219); break;
+            case "costas": cor = new Color(231, 76, 60); break;
+            case "perna": cor = new Color(155, 89, 182); break; // roxo
+            case "ombro": cor = new Color(243, 156, 18); break;
             default: cor = Color.GRAY; break;
         }
 

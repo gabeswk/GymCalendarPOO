@@ -5,9 +5,14 @@ public class TelaLogin extends JFrame {
 
     private JFrame execFrame;
 
-    public TelaLogin(JFrame execFrame) {
-        this.execFrame = execFrame;
 
+    public TelaLogin(JFrame execFrame) {
+
+        //Icone que fica no canto
+        Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
+        setIconImage(icon);
+
+        this.execFrame = execFrame;
         setTitle("Login");
         setSize(350, 250);
         setLocationRelativeTo(null);
@@ -15,20 +20,28 @@ public class TelaLogin extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(TemaEscuro.FUNDO);
 
         JTextField emailField = new JTextField();
         JPasswordField senhaField = new JPasswordField();
         JButton loginBtn = new JButton("Entrar");
 
-        emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        senhaField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        // Criar as labels
+        JLabel emailLabel = new JLabel("Email:");
+        JLabel senhaLabel = new JLabel("Senha:");
 
-        panel.add(new JLabel("Email:"));
+        // Aplicar estilos - Adicione estas linhas
+        TemaEscuro.aplicarLabel(emailLabel);
+        TemaEscuro.aplicarLabel(senhaLabel);
+        TemaEscuro.aplicarInput(emailField);
+        TemaEscuro.aplicarInput(senhaField);
+        TemaEscuro.aplicarBotao(loginBtn);
+
+        // Adicionar componentes na ordem correta
+        panel.add(emailLabel);
         panel.add(emailField);
-
-        panel.add(new JLabel("Senha:"));
+        panel.add(senhaLabel);
         panel.add(senhaField);
-
         panel.add(Box.createVerticalStrut(12));
         panel.add(loginBtn);
 
