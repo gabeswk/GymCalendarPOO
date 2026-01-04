@@ -55,17 +55,20 @@ public class TelaCadastro extends JFrame {
             String senha = new String(senhaField.getPassword());
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+                //JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+                DialogoEscuro.mostrarMensagem(this, "Preencha todos os campos!");
                 return;
             }
 
             if (RepositorioUsuarios.buscarPorEmail(email) != null) {
-                JOptionPane.showMessageDialog(this, "Email já cadastrado!");
+                //JOptionPane.showMessageDialog(this, "Email já cadastrado!");
+                DialogoEscuro.mostrarMensagem(this, "Email já cadastrado!");
                 return;
             }
 
             RepositorioUsuarios.adicionar(new Usuario(nome, email, senha));
-            JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
+            //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
+            DialogoEscuro.mostrarMensagem(this, "Cadastrado com sucesso!");
             dispose();
         });
 

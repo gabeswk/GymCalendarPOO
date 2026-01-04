@@ -133,6 +133,12 @@ public class Exec {
             esq.setFont(baseFont.deriveFont(map).deriveFont(18f));
             esq.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
             esq.setAlignmentX(Component.CENTER_ALIGNMENT);
+            esq.addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    new EsqueciSenha(); // Abre a tela de recuperação
+                }
+            });
 
             // =====================================================
             // MONTAGEM CENTRAL (ADIÇÃO)
