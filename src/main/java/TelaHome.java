@@ -145,6 +145,19 @@ public class TelaHome extends JFrame {
                 addBtn("Agendar Treino", null, painelDireito, e -> abrirDialogCadastrarTreino(dia));
             } else {
                 addLabel("Treino: " + treino.getDescricao(), painelDireito);
+                painelDireito.add(Box.createVerticalStrut(10));
+
+                addBtn("✏️ Editar Treino", new Color(52, 152, 219), painelDireito,
+                        e -> editarTreino(dia, treino));
+
+                addBtn("🗑 Remover Treino", new Color(192, 57, 43), painelDireito,
+                        e -> removerTreino(dia));
+
+                addBtn("🔥 Apagar todos os treinos iguais",
+                        new Color(136, 0, 21),
+                        painelDireito,
+                        e -> removerTodosTreinosIguais(treino));
+
 
                 DefaultListModel<String> modelo = new DefaultListModel<>();
                 treino.getExercicios().forEach(ex -> modelo.addElement(ex.toString()));
@@ -232,6 +245,54 @@ public class TelaHome extends JFrame {
         p.setPreferredSize(new Dimension(500, 650));
     }
 
+    private void editarTreino(LocalDate dia, TreinoDoDia treino) {
+        String novoNome = DialogoEscuro.mostrarInput(
+                this,
+                "Editar nome do treino:",
+                treino.getDescricao()
+        );
+
+        if (novoNome == null || novoNome.isEmpty()) return;
+
+        treino.setDescricao(novoNome);
+
+        DialogoEscuro.mostrarMensagem(this, "Treino atualizado!");
+        atualizarPainelDireito(dia);
+    }
+
+
+    private void removerTreino(LocalDate dia) {
+        int op = JOptionPane.showConfirmDialog(
+                this,
+                "Remover o treino deste dia?",
+                "Confirmar exclusão",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (op == JOptionPane.YES_OPTION) {
+            RepositorioTreinos.removerTreino(usuarioEmail, dia);
+            atualizarPainelDireito(null);
+        }
+    }
+
+    private void removerTodosTreinosIguais(TreinoDoDia treino) {
+
+        int op = JOptionPane.showConfirmDialog(
+                this,
+                "Apagar TODOS os treinos com o nome:\n\"" + treino.getDescricao() + "\"?",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (op != JOptionPane.YES_OPTION) return;
+
+        RepositorioTreinos.removerTodosTreinosIguais( usuarioEmail, treino.getDescricao() );
+
+        atualizarPainelDireito(null);
+    }
+
+
+
     private void realizarLogout() {
         int op = JOptionPane.showConfirmDialog(
                 this,
@@ -245,12 +306,6 @@ public class TelaHome extends JFrame {
             Exec.abrirTelaInicial();   // reabre a tela inicial DE VERDADE
         }
     }
-
-
-
-
-
-
 
 
     private JScrollPane criarScrollPersonalizado(Component view) {

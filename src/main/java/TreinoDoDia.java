@@ -15,6 +15,9 @@ public class TreinoDoDia {
         return descricao;
     }
 
+    public void setDescricao(String descricao) { this.descricao = descricao; }
+
+
     public Color getCor() {
         return cor;
     }

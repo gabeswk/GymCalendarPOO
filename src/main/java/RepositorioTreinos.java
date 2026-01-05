@@ -23,4 +23,22 @@ public class RepositorioTreinos {
         return getMapaUsuario(email).containsKey(data);
     }
 
+
+    public static void removerTreino(String email, LocalDate data) {
+        getMapaUsuario(email).remove(data);
+    }
+
+    public static void removerTodosTreinosIguais(String email, String descricao) {
+
+        Map<LocalDate, TreinoDoDia> mapa = treinosPorUsuario.get(email);
+
+        if (mapa == null) return;
+
+        mapa.entrySet().removeIf(entry ->
+                entry.getValue().getDescricao().equalsIgnoreCase(descricao)
+        );
+    }
+
+
+
 }
