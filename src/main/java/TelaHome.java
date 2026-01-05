@@ -1,3 +1,5 @@
+import ui.TelaBase;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -14,7 +16,7 @@ public class TelaHome extends JFrame {
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
         setTitle("Agenda de Treinos - " + usuarioNome);
         setSize(1000, 650);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         getContentPane().setBackground(TemaEscuro.FUNDO);
@@ -44,7 +46,7 @@ public class TelaHome extends JFrame {
         JPanel topo = new JPanel(new BorderLayout());
         topo.setBackground(TemaEscuro.FUNDO);
 
-// navegação existente
+        // navegação existente
         JPanel navegacao = new JPanel(new FlowLayout());
         navegacao.setBackground(TemaEscuro.FUNDO);
 
@@ -55,13 +57,13 @@ public class TelaHome extends JFrame {
         navegacao.add(lblMes);
         navegacao.add(criarNavBtn(">", e -> mudarMes(1)));
 
-// botão logout (NOVO)
+        // botão logout (NOVO)
         JButton btnLogout = new JButton("Sair");
         TemaEscuro.aplicarBotao(btnLogout);
         btnLogout.setBackground(new Color(192, 57, 43));
         btnLogout.addActionListener(e -> realizarLogout());
 
-// montagem final
+        // montagem final
         topo.add(navegacao, BorderLayout.CENTER);
         topo.add(btnLogout, BorderLayout.EAST);
 
@@ -237,11 +239,16 @@ public class TelaHome extends JFrame {
         );
 
         if (op == JOptionPane.YES_OPTION) {
-            dispose(); // fecha a TelaHome
-            // new TelaLogin(); // use se existir
-            // System.exit(0); // alternativa
+            dispose();                 // fecha TelaHome
+            Exec.abrirTelaInicial();   // reabre a tela inicial DE VERDADE
         }
     }
+
+
+
+
+
+
 
 
     private JScrollPane criarScrollPersonalizado(Component view) {

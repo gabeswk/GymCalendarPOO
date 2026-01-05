@@ -6,13 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Exec {
-
-    public static void main(String[] args) {
-
+    public static void abrirTelaInicial() {
         SwingUtilities.invokeLater(() -> {
             Estilo.aplicar();
+
             JFrame frame = new JFrame("Gym App");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
             frame.setIconImage(icon);
 
@@ -168,6 +167,10 @@ public class Exec {
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
             frame.setVisible(true);
+
         });
+    }
+    public static void main(String[] args) {
+        abrirTelaInicial();
     }
 }
