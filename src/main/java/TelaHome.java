@@ -11,10 +11,12 @@ public class TelaHome extends JFrame {
 
     private JPanel painelCalendario, painelDireito;
     private int anoAtual, mesAtual;
+    private String usuarioEmail;
 
-    public TelaHome(String usuarioNome) {
+    public TelaHome(String usuarioEmail) {
+        this.usuarioEmail = usuarioEmail;
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
-        setTitle("Agenda de Treinos - " + usuarioNome);
+        setTitle("Agenda de Treinos - " + usuarioEmail);
         setSize(1000, 650);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -89,7 +91,7 @@ public class TelaHome extends JFrame {
 
         for (int d = 1; d <= ym.lengthOfMonth(); d++) {
             LocalDate date = LocalDate.of(ano, mes, d);
-            TreinoDoDia t = RepositorioTreinos.getTreino(date);
+            TreinoDoDia t = RepositorioTreinos.getTreino(usuarioEmail, date);
 
             String textoBotao;
             if (t != null) {
@@ -137,7 +139,7 @@ public class TelaHome extends JFrame {
             addLabel("📅 Dia: " + dia, painelDireito);
             painelDireito.add(Box.createVerticalStrut(20));
 
-            TreinoDoDia treino = RepositorioTreinos.getTreino(dia);
+            TreinoDoDia treino = RepositorioTreinos.getTreino(usuarioEmail, dia);
             if (treino == null) {
                 addLabel("Nenhum treino cadastrado.", painelDireito);
                 addBtn("Agendar Treino", null, painelDireito, e -> abrirDialogCadastrarTreino(dia));
@@ -214,10 +216,10 @@ public class TelaHome extends JFrame {
             java.util.List<LocalDate> datas = new ArrayList<>();
             for (LocalDate d = start; !d.isAfter(start.plusDays(28)); d = d.plusDays(freq)) datas.add(d);
 
-            for (LocalDate dt : datas) if (RepositorioTreinos.existeTreino(dt)) {
+            for (LocalDate dt : datas) if (RepositorioTreinos.existeTreino(usuarioEmail, dt)) {
                 DialogoEscuro.mostrarErro(this, "Conflito em " + dt); return;
             }
-            for (LocalDate dt : datas) RepositorioTreinos.salvarTreino(dt, new TreinoDoDia(nome, cor));
+            for (LocalDate dt : datas) RepositorioTreinos.salvarTreino(usuarioEmail, dt, new TreinoDoDia(nome, cor));
 
             DialogoEscuro.mostrarMensagem(this, "Agendado!");
             atualizarPainelDireito(start);
