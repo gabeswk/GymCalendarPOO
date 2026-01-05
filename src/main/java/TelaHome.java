@@ -41,16 +41,32 @@ public class TelaHome extends JFrame {
 
     private void montarCalendario(int ano, int mes) {
         painelCalendario.removeAll();
-        JPanel topo = new JPanel(new FlowLayout());
+        JPanel topo = new JPanel(new BorderLayout());
         topo.setBackground(TemaEscuro.FUNDO);
+
+// navegação existente
+        JPanel navegacao = new JPanel(new FlowLayout());
+        navegacao.setBackground(TemaEscuro.FUNDO);
 
         JLabel lblMes = new JLabel(YearMonth.of(ano, mes).getMonth() + " " + ano);
         TemaEscuro.aplicarLabel(lblMes);
 
-        topo.add(criarNavBtn("<", e -> mudarMes(-1)));
-        topo.add(lblMes);
-        topo.add(criarNavBtn(">", e -> mudarMes(1)));
+        navegacao.add(criarNavBtn("<", e -> mudarMes(-1)));
+        navegacao.add(lblMes);
+        navegacao.add(criarNavBtn(">", e -> mudarMes(1)));
+
+// botão logout (NOVO)
+        JButton btnLogout = new JButton("Sair");
+        TemaEscuro.aplicarBotao(btnLogout);
+        btnLogout.setBackground(new Color(192, 57, 43));
+        btnLogout.addActionListener(e -> realizarLogout());
+
+// montagem final
+        topo.add(navegacao, BorderLayout.CENTER);
+        topo.add(btnLogout, BorderLayout.EAST);
+
         painelCalendario.add(topo, BorderLayout.NORTH);
+
 
         // Aumentei um pouco o gap vertical (segundo parâmetro '5' para '10') para caber melhor o texto duplo
         JPanel dias = new JPanel(new GridLayout(0, 7, 5, 10));
@@ -212,6 +228,22 @@ public class TelaHome extends JFrame {
         p.setPreferredSize(new Dimension(500, 650));
     }
 
+    private void realizarLogout() {
+        int op = JOptionPane.showConfirmDialog(
+                this,
+                "Deseja realmente sair?",
+                "Logout",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (op == JOptionPane.YES_OPTION) {
+            dispose(); // fecha a TelaHome
+            // new TelaLogin(); // use se existir
+            // System.exit(0); // alternativa
+        }
+    }
+
+
     private JScrollPane criarScrollPersonalizado(Component view) {
         JScrollPane sc = new JScrollPane(view);
         sc.setBorder(null); sc.getViewport().setBackground(TemaEscuro.FUNDO);
@@ -243,4 +275,5 @@ public class TelaHome extends JFrame {
         p.add(b);
         p.add(Box.createVerticalStrut(10));
     }
+
 }
