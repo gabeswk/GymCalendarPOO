@@ -54,6 +54,38 @@ public class TemaEscuro {
         });
     }
 
+    public static void aplicarBotaoAcao(JButton b, Color corBase) {
+        b.setBackground(corBase);
+        b.setForeground(Color.WHITE);
+        b.setFocusPainted(false);
+        b.setBorderPainted(false);
+        b.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        b.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        b.setPreferredSize(new Dimension(180, 36));
+
+        // Cantos arredondados
+        b.setBorder(BorderFactory.createEmptyBorder(8, 14, 8, 14));
+
+        // Hover
+        b.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                b.setBackground(corBase.darker());
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                b.setBackground(corBase);
+            }
+        });
+    }
+
+    public static void padronizarBotaoLateral(JButton b) {
+        b.setAlignmentX(Component.CENTER_ALIGNMENT);
+        b.setMaximumSize(new Dimension(Integer.MAX_VALUE, 36));
+        b.setPreferredSize(new Dimension(200, 36));
+    }
+
+
+
     // Estilo da label
     public static void aplicarLabel(JLabel label) {
         label.setForeground(new Color(230, 230, 230)); // Texto bem mais claro

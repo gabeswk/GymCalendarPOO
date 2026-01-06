@@ -23,6 +23,23 @@ public class TelaHome extends JFrame {
         setLayout(new BorderLayout());
         getContentPane().setBackground(TemaEscuro.FUNDO);
 
+        JPanel painelTopo = new JPanel(new BorderLayout());
+        painelTopo.setBackground(TemaEscuro.FUNDO);
+        painelTopo.setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        JButton btnLogout = new JButton("Sair");
+        TemaEscuro.aplicarBotao(btnLogout);
+        btnLogout.setBackground(new Color(192, 57, 43));
+        btnLogout.setPreferredSize(new Dimension(90, 32));
+        btnLogout.addActionListener(e -> realizarLogout());
+
+        JPanel painelLogout = new JPanel(new FlowLayout(FlowLayout.RIGHT, 0, 0));
+        painelLogout.setOpaque(false);
+        painelLogout.add(btnLogout);
+
+        painelTopo.add(painelLogout, BorderLayout.EAST);
+        add(painelTopo, BorderLayout.NORTH);
+
         painelCalendario = new JPanel(new BorderLayout());
         painelDireito = new JPanel();
         painelDireito.setLayout(new BoxLayout(painelDireito, BoxLayout.Y_AXIS));
@@ -58,16 +75,6 @@ public class TelaHome extends JFrame {
         navegacao.add(criarNavBtn("<", e -> mudarMes(-1)));
         navegacao.add(lblMes);
         navegacao.add(criarNavBtn(">", e -> mudarMes(1)));
-
-        // botão logout (NOVO)
-        JButton btnLogout = new JButton("Sair");
-        TemaEscuro.aplicarBotao(btnLogout);
-        btnLogout.setBackground(new Color(192, 57, 43));
-        btnLogout.addActionListener(e -> realizarLogout());
-
-        // montagem final
-        topo.add(navegacao, BorderLayout.CENTER);
-        topo.add(btnLogout, BorderLayout.EAST);
 
         painelCalendario.add(topo, BorderLayout.NORTH);
 
@@ -136,7 +143,7 @@ public class TelaHome extends JFrame {
         if (dia == null) {
             addLabel("Selecione um dia no calendário.", painelDireito);
         } else {
-            addLabel("📅 Dia: " + dia, painelDireito);
+            addLabel("Dia: " + dia, painelDireito);
             painelDireito.add(Box.createVerticalStrut(20));
 
             TreinoDoDia treino = RepositorioTreinos.getTreino(usuarioEmail, dia);
@@ -147,13 +154,20 @@ public class TelaHome extends JFrame {
                 addLabel("Treino: " + treino.getDescricao(), painelDireito);
                 painelDireito.add(Box.createVerticalStrut(10));
 
-                addBtn("✏️ Editar Treino", new Color(52, 152, 219), painelDireito,
-                        e -> editarTreino(dia, treino));
+                JButton editarTreino = new JButton("Editar treino");
+                TemaEscuro.aplicarBotaoAcao(editarTreino, new Color(52, 152, 219));
+                TemaEscuro.padronizarBotaoLateral(editarTreino);
+                editarTreino.addActionListener(e -> editarTreino(dia, treino));
 
-                addBtn("🗑 Remover Treino", new Color(192, 57, 43), painelDireito,
+                painelDireito.add(editarTreino);
+                painelDireito.add(Box.createVerticalStrut(10));
+
+
+
+                addBtn("Remover Treino", new Color(192, 57, 43), painelDireito,
                         e -> removerTreino(dia));
 
-                addBtn("🔥 Apagar todos os treinos iguais",
+                addBtn("Apagar todos os treinos iguais",
                         new Color(136, 0, 21),
                         painelDireito,
                         e -> removerTodosTreinosIguais(treino));
@@ -333,11 +347,21 @@ public class TelaHome extends JFrame {
 
     private void addBtn(String txt, Color bg, JPanel p, java.awt.event.ActionListener acao) {
         JButton b = new JButton(txt);
-        TemaEscuro.aplicarBotao(b);
-        if (bg != null) b.setBackground(bg);
+
+        // estilo base único
+        TemaEscuro.aplicarBotaoAcao(
+                b,
+                bg != null ? bg : TemaEscuro.BOTAO
+        );
+
+        // padronização de layout lateral
+        TemaEscuro.padronizarBotaoLateral(b);
+
         b.addActionListener(acao);
+
         p.add(b);
         p.add(Box.createVerticalStrut(10));
     }
+
 
 }
