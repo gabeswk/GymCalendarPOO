@@ -3,5 +3,3 @@ gab;gab;gab
 Arisnaldo;arisnaldo@gmail.com;win99wtf
 eu;eu;1
 xavier;xavier@gmail.com;123
-atilio;atilio123@gmail.com;123456@78()
-teste;teste@gmail.com;teste123
