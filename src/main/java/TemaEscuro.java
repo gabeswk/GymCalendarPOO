@@ -127,7 +127,6 @@ class CustomScrollBarUI extends BasicScrollBarUI {
         g.translate(-thumbBounds.x, -thumbBounds.y);
     }
 
-    // Remova os botões de aumentar/diminuir para um visual mais limpo e moderno (opcional)
     @Override
     protected JButton createDecreaseButton(int orientation) {
         return createZeroButton();

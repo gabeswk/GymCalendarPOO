@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class DialogoEscuro {
 
-    // Método para mensagens simples
+    //mensagens simples
     public static void mostrarMensagem(Component parent, String mensagem) {
         mostrarMensagem(parent, mensagem, "Mensagem");
     }
@@ -39,7 +39,7 @@ public class DialogoEscuro {
         dialog.setVisible(true);
     }
 
-    // Método para mensagens de erro
+    //mensagens de erro
     public static void mostrarErro(Component parent, String mensagem) {
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parent), "Erro", true);
         dialog.setLayout(new BorderLayout());
@@ -71,7 +71,7 @@ public class DialogoEscuro {
         dialog.setVisible(true);
     }
 
-    // Método para pedir input do usuário
+    //pedir input do usuário
     public static String mostrarInput(Component parent, String mensagem) {
         return mostrarInput(parent, mensagem, "");
     }
@@ -138,7 +138,7 @@ public class DialogoEscuro {
         return resultado[0];
     }
 
-    // Método para confirmação (Sim/Não)
+    //confirmação (Sim ou Não)
     public static boolean mostrarConfirmacao(Component parent, String mensagem) {
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parent), "Confirmação", true);
         dialog.setLayout(new BorderLayout());

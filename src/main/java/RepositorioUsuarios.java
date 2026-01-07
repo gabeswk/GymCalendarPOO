@@ -15,7 +15,6 @@ public class RepositorioUsuarios {
         try {
             salvarNoArquivo();
         } catch (IOException e) {
-            // Tratamento: Mostra um aviso ao usuário em vez de travar o console
             JOptionPane.showMessageDialog(null, "Erro crítico ao salvar dados: " + e.getMessage(), "Erro de Sistema", JOptionPane.ERROR_MESSAGE);
         }
     }

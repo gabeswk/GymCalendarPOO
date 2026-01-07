@@ -17,18 +17,18 @@ public class TelaCadastro extends JFrame {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBackground(TemaEscuro.FUNDO);
 
-        // Criar os campos
+        // Cria os campos
         JTextField nomeField = new JTextField();
         JTextField emailField = new JTextField();
         JPasswordField senhaField = new JPasswordField();
         JButton cadastrarBtn = new JButton("Cadastrar");
 
-        // Criar as labels
+        // Cria as labels
         JLabel nomeLabel = new JLabel("Nome:");
         JLabel emailLabel = new JLabel("Email:");
         JLabel senhaLabel = new JLabel("Senha:");
 
-        // Aplicar estilos
+        // Aplica os estilos
         TemaEscuro.aplicarLabel(nomeLabel);
         TemaEscuro.aplicarLabel(emailLabel);
         TemaEscuro.aplicarLabel(senhaLabel);
@@ -37,7 +37,7 @@ public class TelaCadastro extends JFrame {
         TemaEscuro.aplicarInput(senhaField);
         TemaEscuro.aplicarBotao(cadastrarBtn);
 
-        // Adicionar componentes na ordem correta
+        // Adiciona os componentes na ordem
         panel.add(nomeLabel);
         panel.add(nomeField);
         panel.add(emailLabel);
@@ -55,19 +55,16 @@ public class TelaCadastro extends JFrame {
             String senha = new String(senhaField.getPassword());
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-                //JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
                 DialogoEscuro.mostrarMensagem(this, "Preencha todos os campos!");
                 return;
             }
 
             if (RepositorioUsuarios.buscarPorEmail(email) != null) {
-                //JOptionPane.showMessageDialog(this, "Email já cadastrado!");
                 DialogoEscuro.mostrarMensagem(this, "Email já cadastrado!");
                 return;
             }
 
             RepositorioUsuarios.adicionar(new Usuario(nome, email, senha));
-            //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
             DialogoEscuro.mostrarMensagem(this, "Cadastrado com sucesso!");
             dispose();
         });
