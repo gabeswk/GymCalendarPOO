@@ -253,7 +253,7 @@ public class TelaHome extends JFrame {
         } catch (Exception e) { DialogoEscuro.mostrarErro(this, "Dados inválidos!"); }
     }
 
-
+    // --- Helpers ---
     private void configurarPainel(JPanel p) {
         p.setBackground(TemaEscuro.FUNDO);
         p.setPreferredSize(new Dimension(500, 650));

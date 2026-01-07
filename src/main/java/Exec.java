@@ -33,10 +33,14 @@ public class Exec {
 
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
-
+            // =====================================================
+            // 🔹 PAINEL CENTRAL (ADIÇÃO – NÃO REMOVE NADA)
+            // Tudo que deve ficar no centro vai aqui
+            // =====================================================
             JPanel centerPanel = new JPanel();
             centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
-            centerPanel.setOpaque(false);
+            centerPanel.setOpaque(false); // transparente para mostrar o fundo
+            // =====================================================
 
             // CORES - Arisnaldo
             Color fundoEscuro = new Color(30, 30, 30);
@@ -135,6 +139,9 @@ public class Exec {
                 }
             });
 
+            // =====================================================
+            // MONTAGEM CENTRAL (ADIÇÃO)
+            // =====================================================
             centerPanel.add(logoLabel); // Adiciona a logo primeiro
             centerPanel.add(Box.createVerticalStrut(-100)); // Espaçamento entre logo e título (ajuste o valor se quiser mais/menos)
             //centerPanel.add(label);
@@ -145,12 +152,15 @@ public class Exec {
             centerPanel.add(cadBtn);
             centerPanel.add(Box.createVerticalStrut(15));
             centerPanel.add(esq);
+            // =====================================================
 
-
+            // =====================================================
+            // 🔹 MONTAGEM FINAL (mantém seu Glue funcionando)
+            // =====================================================
             mainPanel.add(Box.createVerticalGlue());
             mainPanel.add(centerPanel);
             mainPanel.add(Box.createVerticalGlue());
-
+            // =====================================================
 
             frame.setContentPane(mainPanel);
             frame.setSize(1280, 720);

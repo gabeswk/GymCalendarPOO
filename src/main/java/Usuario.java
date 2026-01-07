@@ -20,7 +20,6 @@ public class Usuario {
     public String getSenha() {
         return senha;
     }
-
     public void setSenha(String novaSenha) {
         this.senha = novaSenha;
     }

@@ -62,7 +62,7 @@ public class TelaLogin extends JFrame {
                 return;
             }
             DialogoEscuro.mostrarMensagem(this, "Login realizado!");
-
+            //JOptionPane.showMessageDialog(this, "Login realizado!");
 
             // Fecha somente ao logar
             dispose();           // Fecha a TelaLogin

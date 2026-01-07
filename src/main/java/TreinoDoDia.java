@@ -2,8 +2,8 @@ import java.awt.Color;
 import java.util.ArrayList;
 
 public class TreinoDoDia {
-    private String descricao;
-    private Color cor;
+    private String descricao;         // ex: "Peito" ou "Perna"
+    private Color cor;               // cor associada ao tipo do treino
     private ArrayList<Exercicio> exercicios = new ArrayList<>();
 
     public TreinoDoDia(String descricao, Color cor) {
