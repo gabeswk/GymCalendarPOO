@@ -1,5 +1,6 @@
 teste;teste;teste
 gab;gab;gab
-Arisnaldo;arisnaldo@gmail.com;win99wtf
+Arisnaldo;arisnaldo@gmail.com;123
 eu;eu;1
 xavier;xavier@gmail.com;123
+admin;admin;1234

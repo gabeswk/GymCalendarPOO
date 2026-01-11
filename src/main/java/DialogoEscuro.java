@@ -1,4 +1,6 @@
+
 import javax.swing.*;
+
 import java.awt.*;
 
 public class DialogoEscuro {
@@ -109,7 +111,7 @@ public class DialogoEscuro {
         btnCancelar.setMaximumSize(new Dimension(100, 35));
         btnCancelar.setPreferredSize(new Dimension(100, 35));
 
-        final String[] resultado = {null};
+        final String[] resultado = { null };
 
         btnOk.addActionListener(e -> {
             resultado[0] = campo.getText();
@@ -168,7 +170,7 @@ public class DialogoEscuro {
         btnNao.setMaximumSize(new Dimension(100, 35));
         btnNao.setPreferredSize(new Dimension(100, 35));
 
-        final boolean[] resultado = {false};
+        final boolean[] resultado = { false };
 
         btnSim.addActionListener(e -> {
             resultado[0] = true;

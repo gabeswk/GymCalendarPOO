@@ -1,25 +1,28 @@
 import javax.swing.*;
+
 import java.awt.*;
 
 public class TelaLogin extends JFrame {
 
     private JFrame execFrame;
 
-
     public TelaLogin(JFrame execFrame) {
-
-        //Icone que fica no canto
+        // Ícone que fica no canto
         Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
         setIconImage(icon);
 
         this.execFrame = execFrame;
         setTitle("Login");
-        setSize(350, 250);
+        setSize(440, 300); // Aumentei o tamanho
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Aplicar cor de fundo na Janela
+        getContentPane().setBackground(TemaEscuro.FUNDO);
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40)); // Margens laterais
         panel.setBackground(TemaEscuro.FUNDO);
 
         JTextField emailField = new JTextField();
@@ -30,19 +33,25 @@ public class TelaLogin extends JFrame {
         JLabel emailLabel = new JLabel("Email:");
         JLabel senhaLabel = new JLabel("Senha:");
 
-        // Aplicar estilos - Adicione estas linhas
+        // Aplicar estilos
         TemaEscuro.aplicarLabel(emailLabel);
         TemaEscuro.aplicarLabel(senhaLabel);
         TemaEscuro.aplicarInput(emailField);
         TemaEscuro.aplicarInput(senhaField);
         TemaEscuro.aplicarBotao(loginBtn);
 
-        // Adicionar componentes na ordem correta
+        // Adicionar componentes com espaçamentos
         panel.add(emailLabel);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(emailField);
+
+        panel.add(Box.createVerticalStrut(20)); // Espaço entre os grupos
+
         panel.add(senhaLabel);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(senhaField);
-        panel.add(Box.createVerticalStrut(12));
+
+        panel.add(Box.createVerticalStrut(30)); // Espaço antes do botão
         panel.add(loginBtn);
 
         add(panel);
@@ -58,17 +67,16 @@ public class TelaLogin extends JFrame {
                 return;
             }
             if (!usuario.getSenha().equals(senha)) {
-                DialogoEscuro.mostrarMensagem(this, "Senha incorreta!");
+                DialogoEscuro.mostrarErro(this, "Senha incorreta!");
                 return;
             }
             DialogoEscuro.mostrarMensagem(this, "Login realizado!");
-            //JOptionPane.showMessageDialog(this, "Login realizado!");
 
             // Fecha somente ao logar
-            dispose();           // Fecha a TelaLogin
+            dispose(); // Fecha a TelaLogin
             execFrame.dispose(); // Fecha o Exec
 
-            new TelaHome(usuario.getNome());
+            new TelaHome(usuario.getEmail()); // Usa email ao invés de nome
         });
 
         setVisible(true);

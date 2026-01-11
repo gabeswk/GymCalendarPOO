@@ -1,20 +1,24 @@
 import javax.swing.*;
+
 import java.awt.*;
 
 public class TelaCadastro extends JFrame {
-    public TelaCadastro(){
-
-        //Icone que fica no canto
+    public TelaCadastro() {
+        // Ícone que fica no canto
         Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
         setIconImage(icon);
 
-        setTitle("Cadastro de usuario");
-        setSize(400, 300);
+        setTitle("Cadastro de Usuário");
+        setSize(440, 380); // Aumentei o tamanho para acomodar 3 campos
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Aplicar cor de fundo na Janela
+        getContentPane().setBackground(TemaEscuro.FUNDO);
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40)); // Margens laterais
         panel.setBackground(TemaEscuro.FUNDO);
 
         // Criar os campos
@@ -37,14 +41,24 @@ public class TelaCadastro extends JFrame {
         TemaEscuro.aplicarInput(senhaField);
         TemaEscuro.aplicarBotao(cadastrarBtn);
 
-        // Adicionar componentes na ordem correta
+        // Adicionar componentes com espaçamentos
         panel.add(nomeLabel);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(nomeField);
+
+        panel.add(Box.createVerticalStrut(20)); // Espaço entre os grupos
+
         panel.add(emailLabel);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(emailField);
+
+        panel.add(Box.createVerticalStrut(20)); // Espaço entre os grupos
+
         panel.add(senhaLabel);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(senhaField);
-        panel.add(Box.createVerticalStrut(10));
+
+        panel.add(Box.createVerticalStrut(30)); // Espaço antes do botão
         panel.add(cadastrarBtn);
 
         add(panel);
@@ -55,19 +69,16 @@ public class TelaCadastro extends JFrame {
             String senha = new String(senhaField.getPassword());
 
             if (nome.isEmpty() || email.isEmpty() || senha.isEmpty()) {
-                //JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
-                DialogoEscuro.mostrarMensagem(this, "Preencha todos os campos!");
+                DialogoEscuro.mostrarErro(this, "Preencha todos os campos!");
                 return;
             }
 
             if (RepositorioUsuarios.buscarPorEmail(email) != null) {
-                //JOptionPane.showMessageDialog(this, "Email já cadastrado!");
-                DialogoEscuro.mostrarMensagem(this, "Email já cadastrado!");
+                DialogoEscuro.mostrarErro(this, "Email já cadastrado!");
                 return;
             }
 
             RepositorioUsuarios.adicionar(new Usuario(nome, email, senha));
-            //JOptionPane.showMessageDialog(this, "Cadastrado com sucesso!");
             DialogoEscuro.mostrarMensagem(this, "Cadastrado com sucesso!");
             dispose();
         });

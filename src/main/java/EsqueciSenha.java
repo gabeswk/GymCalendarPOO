@@ -1,68 +1,84 @@
 import javax.swing.*;
+
 import java.awt.*;
 
 public class EsqueciSenha extends JFrame {
 
     public EsqueciSenha() {
-
-        //Icone que fica no canto
+        // Configuração Inicial
         Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
         setIconImage(icon);
 
         setTitle("Recuperar Senha");
-        setSize(400, 250);
+        setSize(500, 320); // Aumentei a largura para acomodar melhor
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
+        // Aplicar cor de fundo na Janela
+        getContentPane().setBackground(TemaEscuro.FUNDO);
+
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); // Margem interna
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 50, 40, 50)); // Margens laterais maiores
+        panel.setBackground(TemaEscuro.FUNDO);
 
+        // Componentes
+        JLabel lblEmail = new JLabel("Email cadastrado:");
         JTextField emailField = new JTextField();
+
+        JLabel lblSenha = new JLabel("Nova senha:");
         JPasswordField novaSenhaField = new JPasswordField();
+
         JButton recuperarBtn = new JButton("Recuperar Senha");
 
-        emailField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
-        novaSenhaField.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+        // Estilizar Labels
+        TemaEscuro.aplicarLabel(lblEmail);
+        TemaEscuro.aplicarLabel(lblSenha);
 
-        panel.add(new JLabel("Email cadastrado:"));
+        // Estilizar Inputs
+        TemaEscuro.aplicarInput(emailField);
+        TemaEscuro.aplicarInput(novaSenhaField);
+
+        // Estilizar Botão
+        TemaEscuro.aplicarBotao(recuperarBtn);
+
+        // Adicionando ao painel com espaçamentos
+        panel.add(lblEmail);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(emailField);
 
-        panel.add(Box.createVerticalStrut(10));
+        panel.add(Box.createVerticalStrut(20)); // Espaço entre os grupos
 
-        panel.add(new JLabel("Nova senha:"));
+        panel.add(lblSenha);
+        panel.add(Box.createVerticalStrut(8));
         panel.add(novaSenhaField);
 
-        panel.add(Box.createVerticalStrut(20));
-        recuperarBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        panel.add(Box.createVerticalStrut(30)); // Espaço antes do botão
         panel.add(recuperarBtn);
 
         add(panel);
 
+        // Lógica do botão
         recuperarBtn.addActionListener(e -> {
             String email = emailField.getText();
             String novaSenha = new String(novaSenhaField.getPassword());
 
             if (email.isEmpty() || novaSenha.isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Preencha todos os campos!");
+                DialogoEscuro.mostrarErro(this, "Preencha todos os campos!");
                 return;
             }
 
-            // Busca o usuário no repositório (que carregou do arquivo)
             Usuario usuario = RepositorioUsuarios.buscarPorEmail(email);
 
             if (usuario == null) {
-                JOptionPane.showMessageDialog(this, "Email não encontrado!");
+                DialogoEscuro.mostrarErro(this, "Email não encontrado!");
                 return;
             }
 
-            // 1. Altera a senha no objeto em memória
             usuario.setSenha(novaSenha);
-
-            // 2. Salva a alteração no arquivo TXT
             RepositorioUsuarios.atualizarArquivo();
 
-            JOptionPane.showMessageDialog(this, "Senha atualizada com sucesso!");
+            DialogoEscuro.mostrarMensagem(this, "Senha atualizada com sucesso!");
             dispose();
         });
 
