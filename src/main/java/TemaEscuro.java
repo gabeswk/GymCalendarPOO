@@ -51,6 +51,11 @@ public class TemaEscuro {
         label.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
+    public static void aplicarBotaoCompacto(JButton botao, Color cor) {
+        configurarBaseBotao(botao, cor, cor.darker(), new Dimension(100, 32), 12);
+        botao.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+    }
+
     // --- MÉTODOS PRIVADOS AUXILIARES ---
 
     /**

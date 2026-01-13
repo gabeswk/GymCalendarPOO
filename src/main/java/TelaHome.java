@@ -64,8 +64,7 @@ public class TelaHome extends JFrame {
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
 
         JButton btnRelatorio = new JButton("Relatório");
-        TemaEscuro.aplicarBotao(btnRelatorio);
-        btnRelatorio.setBackground(new Color(46, 204, 113)); // Verde Esmeralda
+        TemaEscuro.aplicarBotaoCompacto(btnRelatorio, new Color(46, 204, 113));
         btnRelatorio.addActionListener(e -> new TelaRelatorio(this, usuarioEmail).setVisible(true));
 
         JButton btnLogout = new JButton("Sair");
@@ -165,7 +164,7 @@ public class TelaHome extends JFrame {
                 painelDireito.add(Box.createVerticalStrut(10));
 
                 // Botão Marcar/Desmarcar Conclusão
-                String txtConcluir = treino.isConcluido() ? "Desmarcar Treino" : "Marcar como Concluído";
+                String txtConcluir = treino.isConcluido() ? "Desmarcar Treino" : "Concluído";
                 Color corConcluir = treino.isConcluido() ? Color.GRAY : new Color(46, 204, 113);
 
                 addBtn(txtConcluir, corConcluir, painelDireito, e -> {
@@ -205,7 +204,8 @@ public class TelaHome extends JFrame {
                 addBtn("Adicionar Exercício", null, btns, e -> {
                     try {
                         String nome = DialogoEscuro.mostrarInput(this, "Nome:");
-                        if (nome == null || nome.isEmpty()) return;
+                        if (nome == null || nome.isEmpty())
+                            return;
                         int s = Integer.parseInt(DialogoEscuro.mostrarInput(this, "Séries:"));
                         int r = Integer.parseInt(DialogoEscuro.mostrarInput(this, "Reps:"));
                         treino.adicionarExercicio(new Exercicio(nome, s, r));
@@ -218,12 +218,15 @@ public class TelaHome extends JFrame {
 
                 addBtn("Editar Selecionado", new Color(211, 84, 0), btns, e -> {
                     int idx = lista.getSelectedIndex();
-                    if (idx < 0) return;
+                    if (idx < 0)
+                        return;
                     Exercicio ex = treino.getExercicios().get(idx);
                     try {
                         ex.setNome(DialogoEscuro.mostrarInput(this, "Nome:", ex.getNome()));
-                        ex.setSeries(Integer.parseInt(DialogoEscuro.mostrarInput(this, "Séries:", String.valueOf(ex.getSeries()))));
-                        ex.setRepeticoes(Integer.parseInt(DialogoEscuro.mostrarInput(this, "Reps:", String.valueOf(ex.getRepeticoes()))));
+                        ex.setSeries(Integer
+                                .parseInt(DialogoEscuro.mostrarInput(this, "Séries:", String.valueOf(ex.getSeries()))));
+                        ex.setRepeticoes(Integer.parseInt(
+                                DialogoEscuro.mostrarInput(this, "Reps:", String.valueOf(ex.getRepeticoes()))));
                         RepositorioTreinos.salvarTreino(usuarioEmail, dia, treino); // Salvar
                         atualizarPainelDireito(dia);
                     } catch (Exception err) {
@@ -247,10 +250,13 @@ public class TelaHome extends JFrame {
 
     private void abrirDialogCadastrarTreino(LocalDate start) {
         String nome = DialogoEscuro.mostrarInput(this, "Nome do treino (ex: Peito, A, B):");
-        if (nome == null || nome.isEmpty()) return;
+        if (nome == null || nome.isEmpty())
+            return;
         try {
-            int freq = Integer.parseInt(DialogoEscuro.mostrarInput(this, "Repetir a cada quantos dias (2-7)? (Use 1 para único dia)"));
-            if (freq < 1 || freq > 7) throw new Exception();
+            int freq = Integer.parseInt(
+                    DialogoEscuro.mostrarInput(this, "Repetir a cada quantos dias (2-7)? (Use 1 para único dia)"));
+            if (freq < 1 || freq > 7)
+                throw new Exception();
 
             Color[] paleta = {
                     new Color(52, 152, 219), new Color(231, 76, 60), new Color(155, 89, 182),
@@ -261,7 +267,7 @@ public class TelaHome extends JFrame {
 
             java.util.List<LocalDate> datas = new ArrayList<>();
             // Se for 1 dia, adiciona só ele. Se for repetição, faz o loop.
-            if(freq == 1) {
+            if (freq == 1) {
                 datas.add(start);
             } else {
                 for (LocalDate d = start; !d.isAfter(start.plusDays(28)); d = d.plusDays(freq))
@@ -292,7 +298,8 @@ public class TelaHome extends JFrame {
 
     private void editarTreino(LocalDate dia, TreinoDoDia treino) {
         String novoNome = DialogoEscuro.mostrarInput(this, "Editar nome do treino:", treino.getDescricao());
-        if (novoNome == null || novoNome.isEmpty()) return;
+        if (novoNome == null || novoNome.isEmpty())
+            return;
         treino.setDescricao(novoNome);
         RepositorioTreinos.salvarTreino(usuarioEmail, dia, treino); // Salvar
         DialogoEscuro.mostrarMensagem(this, "Treino atualizado!");
@@ -353,8 +360,10 @@ public class TelaHome extends JFrame {
 
     private void addBtn(String txt, Color bg, JPanel p, java.awt.event.ActionListener acao) {
         JButton b = new JButton(txt);
-        if (bg != null) TemaEscuro.aplicarBotaoColorido(b, bg);
-        else TemaEscuro.aplicarBotao(b);
+        if (bg != null)
+            TemaEscuro.aplicarBotaoColorido(b, bg);
+        else
+            TemaEscuro.aplicarBotao(b);
         b.addActionListener(acao);
         p.add(b);
         p.add(Box.createVerticalStrut(10));
