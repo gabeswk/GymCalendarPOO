@@ -123,6 +123,9 @@ public class Exec {
     }
 
     public static void main(String[] args) {
+
+        Exercicio exercicioPadrao = new Exercicio("Supino");
+
         abrirTelaInicial();
     }
 }

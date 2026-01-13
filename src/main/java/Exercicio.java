@@ -10,6 +10,13 @@ public class Exercicio {
         this.repeticoes = repeticoes;
     }
 
+    public Exercicio(String nome) {
+        this.nome = nome;
+        this.series = 3;
+        this.repeticoes = 10;
+    }
+
+
     public String getNome() { return nome; }
     public int getSeries() { return series; }
     public int getRepeticoes() { return repeticoes; }
