@@ -4,3 +4,4 @@ Arisnaldo;arisnaldo@gmail.com;123
 eu;eu;1
 xavier;xavier@gmail.com;123
 admin;admin;1234
+ele;toma;3
