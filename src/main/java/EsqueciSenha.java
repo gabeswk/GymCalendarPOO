@@ -5,24 +5,21 @@ import java.awt.*;
 public class EsqueciSenha extends JFrame {
 
     public EsqueciSenha() {
-        // Configuração Inicial
         Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
         setIconImage(icon);
 
         setTitle("Recuperar Senha");
-        setSize(500, 320); // Aumentei a largura para acomodar melhor
+        setSize(500, 320);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Aplicar cor de fundo na Janela
         getContentPane().setBackground(TemaEscuro.FUNDO);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(40, 50, 40, 50)); // Margens laterais maiores
+        panel.setBorder(BorderFactory.createEmptyBorder(40, 50, 40, 50));
         panel.setBackground(TemaEscuro.FUNDO);
 
-        // Componentes
         JLabel lblEmail = new JLabel("Email cadastrado:");
         JTextField emailField = new JTextField();
 
@@ -31,34 +28,30 @@ public class EsqueciSenha extends JFrame {
 
         JButton recuperarBtn = new JButton("Recuperar Senha");
 
-        // Estilizar Labels
+
         TemaEscuro.aplicarLabel(lblEmail);
         TemaEscuro.aplicarLabel(lblSenha);
 
-        // Estilizar Inputs
         TemaEscuro.aplicarInput(emailField);
         TemaEscuro.aplicarInput(novaSenhaField);
 
-        // Estilizar Botão
         TemaEscuro.aplicarBotao(recuperarBtn);
 
-        // Adicionando ao painel com espaçamentos
         panel.add(lblEmail);
         panel.add(Box.createVerticalStrut(8));
         panel.add(emailField);
 
-        panel.add(Box.createVerticalStrut(20)); // Espaço entre os grupos
+        panel.add(Box.createVerticalStrut(20));
 
         panel.add(lblSenha);
         panel.add(Box.createVerticalStrut(8));
         panel.add(novaSenhaField);
 
-        panel.add(Box.createVerticalStrut(30)); // Espaço antes do botão
+        panel.add(Box.createVerticalStrut(30));
         panel.add(recuperarBtn);
 
         add(panel);
 
-        // Lógica do botão
         recuperarBtn.addActionListener(e -> {
             String email = emailField.getText();
             String novaSenha = new String(novaSenhaField.getPassword());

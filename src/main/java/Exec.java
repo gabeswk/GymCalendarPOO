@@ -15,21 +15,15 @@ public class Exec {
             Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
             frame.setIconImage(icon);
 
-            // =====================================================
             // PAINEL PRINCIPAL
-            // =====================================================
             JPanel mainPanel = new JPanel();
             mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-            mainPanel.setBackground(TemaEscuro.FUNDO); // Usa cor do TemaEscuro
-            // =====================================================
+            mainPanel.setBackground(TemaEscuro.FUNDO);
 
-            // =====================================================
             // PAINEL CENTRAL
-            // =====================================================
             JPanel centerPanel = new JPanel();
             centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
             centerPanel.setOpaque(false);
-            // =====================================================
 
             // Logo
             ImageIcon logoIcon = new ImageIcon("logo.png");
@@ -46,12 +40,10 @@ public class Exec {
             JButton cadBtn = new JButton("Cadastre-se");
             configurarBotaoTelaInicial(cadBtn);
 
-            // Define tamanho dos botões
             Dimension btnSize = new Dimension(200, 50);
             loginBtn.setMaximumSize(btnSize);
             cadBtn.setMaximumSize(btnSize);
 
-            // --- CONEXÃO DOS BOTÕES ---
             loginBtn.addActionListener(e -> new TelaLogin(frame));
             cadBtn.addActionListener(e -> new TelaCadastro());
 
@@ -71,9 +63,6 @@ public class Exec {
                 }
             });
 
-            // =====================================================
-            // MONTAGEM CENTRAL
-            // =====================================================
             centerPanel.add(logoLabel);
             centerPanel.add(Box.createVerticalStrut(20));
             centerPanel.add(loginBtn);
@@ -81,15 +70,10 @@ public class Exec {
             centerPanel.add(cadBtn);
             centerPanel.add(Box.createVerticalStrut(15));
             centerPanel.add(esq);
-            // =====================================================
 
-            // =====================================================
-            // MONTAGEM FINAL
-            // =====================================================
             mainPanel.add(Box.createVerticalGlue());
             mainPanel.add(centerPanel);
             mainPanel.add(Box.createVerticalGlue());
-            // =====================================================
 
             frame.setContentPane(mainPanel);
             frame.setSize(1280, 720);
@@ -99,7 +83,6 @@ public class Exec {
         });
     }
 
-    // Método auxiliar para configurar botões da tela inicial
     private static void configurarBotaoTelaInicial(JButton botao) {
         botao.setBackground(new Color(60, 60, 60)); // Cinza escuro
         botao.setForeground(Color.WHITE);
@@ -109,7 +92,6 @@ public class Exec {
         botao.setOpaque(true);
         botao.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Hover effect
         Color hoverColor = new Color(80, 80, 80);
         botao.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent e) {

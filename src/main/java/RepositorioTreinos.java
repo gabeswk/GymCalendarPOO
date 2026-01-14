@@ -4,16 +4,13 @@ import java.util.Map;
 
 public class RepositorioTreinos {
 
-    // Estrutura: Email -> (Data -> Treino)
     private static Map<String, Map<LocalDate, TreinoDoDia>> treinosPorUsuario = new HashMap<>();
 
-    // Método auxiliar privado
     private static Map<LocalDate, TreinoDoDia> getMapaUsuario(String email) {
         return treinosPorUsuario.computeIfAbsent(email, k -> new HashMap<>());
     }
 
-    // --- Métodos de Leitura ---
-
+    //Métodos de Leitura
     public static TreinoDoDia getTreino(String email, LocalDate data) {
         return getMapaUsuario(email).get(data);
     }
@@ -22,16 +19,13 @@ public class RepositorioTreinos {
         return getMapaUsuario(email).containsKey(data);
     }
 
-    /**
-     * NOVO MÉTODO: Necessário para a TelaRelatorio.
-     * Retorna todos os treinos do usuário para gerar as estatísticas.
-     */
+
+
     public static Map<LocalDate, TreinoDoDia> listar(String email) {
         return treinosPorUsuario.getOrDefault(email, new HashMap<>());
     }
 
-    // --- Métodos de Escrita ---
-
+    //Métodos de Escrita
     public static void salvarTreino(String email, LocalDate data, TreinoDoDia treino) {
         getMapaUsuario(email).put(data, treino);
     }

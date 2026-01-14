@@ -47,7 +47,6 @@ public class TelaHome extends JFrame {
         JPanel topo = new JPanel(new BorderLayout());
         topo.setBackground(TemaEscuro.FUNDO);
 
-        // --- Navegação (< Mês >) ---
         JPanel navegacao = new JPanel(new FlowLayout());
         navegacao.setBackground(TemaEscuro.FUNDO);
 
@@ -58,7 +57,7 @@ public class TelaHome extends JFrame {
         navegacao.add(lblMes);
         navegacao.add(criarNavBtn(">", e -> mudarMes(1)));
 
-        // --- Botões do Topo (Relatório e Sair) ---
+        //Botões do Topo (Relatório e Sair)
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         painelBotoes.setBackground(TemaEscuro.FUNDO);
         painelBotoes.setBorder(BorderFactory.createEmptyBorder(3, 3, 3, 3));
@@ -74,12 +73,10 @@ public class TelaHome extends JFrame {
         painelBotoes.add(btnRelatorio);
         painelBotoes.add(btnLogout);
 
-        // Montagem do Topo
         topo.add(navegacao, BorderLayout.CENTER);
         topo.add(painelBotoes, BorderLayout.EAST);
         painelCalendario.add(topo, BorderLayout.NORTH);
 
-        // --- Grid dos Dias ---
         JPanel dias = new JPanel(new GridLayout(0, 7, 5, 10));
         dias.setBackground(TemaEscuro.FUNDO);
         dias.setBorder(new EmptyBorder(10, 10, 10, 10));
@@ -158,7 +155,6 @@ public class TelaHome extends JFrame {
                 addLabel("Nenhum treino cadastrado.", painelDireito);
                 addBtn("Agendar Treino", null, painelDireito, e -> abrirDialogCadastrarTreino(dia));
             } else {
-                // Status Texto
                 String status = treino.isConcluido() ? " (Concluído)" : " (Pendente)";
                 addLabel("Treino: " + treino.getDescricao() + status, painelDireito);
                 painelDireito.add(Box.createVerticalStrut(10));
@@ -266,7 +262,6 @@ public class TelaHome extends JFrame {
             Color cor = paleta[Math.abs(nome.hashCode()) % paleta.length];
 
             java.util.List<LocalDate> datas = new ArrayList<>();
-            // Se for 1 dia, adiciona só ele. Se for repetição, faz o loop.
             if (freq == 1) {
                 datas.add(start);
             } else {

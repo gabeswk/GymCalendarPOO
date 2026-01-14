@@ -140,7 +140,7 @@ public class DialogoEscuro {
         return resultado[0];
     }
 
-    // Método para confirmação (Sim/Não)
+    // Método para pedir confirmação (Sim ou Não)
     public static boolean mostrarConfirmacao(Component parent, String mensagem) {
         JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(parent), "Confirmação", true);
         dialog.setLayout(new BorderLayout());

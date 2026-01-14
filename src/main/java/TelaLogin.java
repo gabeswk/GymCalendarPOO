@@ -13,7 +13,7 @@ public class TelaLogin extends JFrame {
 
         this.execFrame = execFrame;
         setTitle("Login");
-        setSize(440, 300); // Aumentei o tamanho
+        setSize(440, 300);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -22,7 +22,7 @@ public class TelaLogin extends JFrame {
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40)); // Margens laterais
+        panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40));
         panel.setBackground(TemaEscuro.FUNDO);
 
         JTextField emailField = new JTextField();
@@ -40,18 +40,17 @@ public class TelaLogin extends JFrame {
         TemaEscuro.aplicarInput(senhaField);
         TemaEscuro.aplicarBotao(loginBtn);
 
-        // Adicionar componentes com espaçamentos
         panel.add(emailLabel);
         panel.add(Box.createVerticalStrut(8));
         panel.add(emailField);
 
-        panel.add(Box.createVerticalStrut(20)); // Espaço entre os grupos
+        panel.add(Box.createVerticalStrut(20));
 
         panel.add(senhaLabel);
         panel.add(Box.createVerticalStrut(8));
         panel.add(senhaField);
 
-        panel.add(Box.createVerticalStrut(30)); // Espaço antes do botão
+        panel.add(Box.createVerticalStrut(30));
         panel.add(loginBtn);
 
         add(panel);
@@ -72,11 +71,9 @@ public class TelaLogin extends JFrame {
             }
             DialogoEscuro.mostrarMensagem(this, "Login realizado!");
 
-            // Fecha somente ao logar
-            dispose(); // Fecha a TelaLogin
-            execFrame.dispose(); // Fecha o Exec
-
-            new TelaHome(usuario.getEmail()); // Usa email ao invés de nome
+            dispose();
+            execFrame.dispose();
+            new TelaHome(usuario.getEmail());
         });
 
         setVisible(true);

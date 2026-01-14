@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class RepositorioUsuarios {
     private static final String ARQUIVO = "usuarios.txt";
+
     private static ArrayList<Usuario> usuarios = new ArrayList<>();
 
     static {
@@ -36,7 +37,6 @@ public class RepositorioUsuarios {
                 bw.newLine();
             }
         } catch (IOException e) {
-            // Log interno do erro antes de relançar
             System.err.println("Falha na escrita: " + e.getMessage());
             throw e;
         }
