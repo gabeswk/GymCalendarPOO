@@ -15,7 +15,6 @@ public class TelaRelatorio extends JDialog {
         // Aplica o ícone
         setIconImage(Toolkit.getDefaultToolkit().getImage("icon.png"));
 
-        // Cor de fundo do dialog
         getContentPane().setBackground(TemaEscuro.FUNDO);
 
         // Painel principal
@@ -30,7 +29,6 @@ public class TelaRelatorio extends JDialog {
         titulo.setHorizontalAlignment(SwingConstants.CENTER);
         titulo.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
 
-        // TextArea estilizada
         JTextArea textArea = new JTextArea();
         textArea.setEditable(false);
         textArea.setBackground(TemaEscuro.CAMPO);
@@ -40,7 +38,7 @@ public class TelaRelatorio extends JDialog {
         textArea.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         textArea.setLineWrap(false);
 
-        // --- LÓGICA DO RELATÓRIO ---
+        //RELATÓRIO
         StringBuilder sb = new StringBuilder();
         Map<LocalDate, TreinoDoDia> todos = RepositorioTreinos.listar(usuarioEmail);
 
@@ -49,7 +47,6 @@ public class TelaRelatorio extends JDialog {
             sb.append("         SEM DADOS DISPONÍVEIS         \n");
             sb.append("═══════════════════════════════════════\n");
         } else {
-            // Mapas para contagem
             Map<String, Integer> totalAgendado = new HashMap<>();
             Map<String, Integer> totalConcluido = new HashMap<>();
 
@@ -94,7 +91,6 @@ public class TelaRelatorio extends JDialog {
 
         textArea.setText(sb.toString());
 
-        // ScrollPane estilizado
         JScrollPane scrollPane = new JScrollPane(textArea);
         scrollPane.setBorder(BorderFactory.createLineBorder(TemaEscuro.BORDA, 1));
         scrollPane.getViewport().setBackground(TemaEscuro.CAMPO);
@@ -112,7 +108,6 @@ public class TelaRelatorio extends JDialog {
         btnPanel.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0));
         btnPanel.add(btnFechar);
 
-        // Montagem
         mainPanel.add(titulo, BorderLayout.NORTH);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(btnPanel, BorderLayout.SOUTH);

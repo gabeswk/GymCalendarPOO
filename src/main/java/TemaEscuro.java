@@ -13,8 +13,6 @@ public class TemaEscuro {
     public static final Color TEXTO = new Color(241, 241, 241);
     public static final Color BORDA = new Color(80, 80, 84);
 
-    // --- MÉTODOS PÚBLICOS ---
-
     public static void aplicarInput(JTextField campo) {
         campo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 45));
         campo.setBackground(CAMPO);
@@ -27,19 +25,15 @@ public class TemaEscuro {
     }
 
     public static void aplicarBotao(JButton botao) {
-        // Reutiliza a lógica base passando as cores padrão
         configurarBaseBotao(botao, BOTAO, BOTAO_HOVER, new Dimension(200, 40), 14);
     }
 
     public static void aplicarBotaoLogout(JButton botao) {
-        // Reutiliza a base, mas com tamanho e fonte menores
         configurarBaseBotao(botao, BOTAO, BOTAO_HOVER, new Dimension(80, 32), 12);
-        // Ajuste específico de padding para o logout
         botao.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
     }
 
     public static void aplicarBotaoColorido(JButton botao, Color corBase) {
-        // Calcula a cor de hover automaticamente (um pouco mais escura ou clara)
         Color corHover = corBase.darker();
         configurarBaseBotao(botao, corBase, corHover, new Dimension(200, 40), 14);
     }
@@ -56,11 +50,10 @@ public class TemaEscuro {
         botao.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
     }
 
-    // --- MÉTODOS PRIVADOS AUXILIARES ---
 
-    /**
-     * Centraliza a configuração visual de todos os botões
-     */
+
+    //Centraliza a configuração visual de todos os botões
+
     private static void configurarBaseBotao(JButton botao, Color bg, Color bgHover, Dimension dim, int fontSize) {
         botao.setBackground(bg);
         botao.setForeground(Color.WHITE);
@@ -78,16 +71,15 @@ public class TemaEscuro {
             botao.setMaximumSize(dim);
         }
 
-        // Padding padrão
         botao.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         // Adiciona o efeito de hover
         adicionarHoverEffect(botao, bg, bgHover);
     }
 
-    /**
-     * Cria o listener de mouse
-     */
+
+    //Cria o listener de mouse
+
     private static void adicionarHoverEffect(JButton botao, Color normal, Color hover) {
         for (var l : botao.getMouseListeners()) {
             if (l instanceof HoverListener)
@@ -97,7 +89,6 @@ public class TemaEscuro {
         botao.addMouseListener(new HoverListener(botao, normal, hover));
     }
 
-    // Classe estática interna para evitar criação excessiva de classes anônimas
     private static class HoverListener extends MouseAdapter {
         private final JButton botao;
         private final Color normal;

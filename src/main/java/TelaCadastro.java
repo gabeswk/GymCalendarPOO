@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class TelaCadastro extends JFrame {
     public TelaCadastro() {
-        // Ícone que fica no canto
+        //Ícone que fica no canto
         Image icon = Toolkit.getDefaultToolkit().getImage("icon.png");
         setIconImage(icon);
 
@@ -13,7 +13,7 @@ public class TelaCadastro extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Aplicar cor de fundo na Janela
+        //Aplicar cor de fundo na Janela
         getContentPane().setBackground(TemaEscuro.FUNDO);
 
         JPanel panel = new JPanel();
@@ -21,18 +21,18 @@ public class TelaCadastro extends JFrame {
         panel.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40)); // Margens laterais
         panel.setBackground(TemaEscuro.FUNDO);
 
-        // Criar os campos
+        //Criar os campos
         JTextField nomeField = new JTextField();
         JTextField emailField = new JTextField();
         JPasswordField senhaField = new JPasswordField();
         JButton cadastrarBtn = new JButton("Cadastrar");
 
-        // Criar as labels
+        //Criar as labels
         JLabel nomeLabel = new JLabel("Nome:");
         JLabel emailLabel = new JLabel("Email:");
         JLabel senhaLabel = new JLabel("Senha:");
 
-        // Aplicar estilos
+        //Aplicar estilos
         TemaEscuro.aplicarLabel(nomeLabel);
         TemaEscuro.aplicarLabel(emailLabel);
         TemaEscuro.aplicarLabel(senhaLabel);
@@ -41,7 +41,7 @@ public class TelaCadastro extends JFrame {
         TemaEscuro.aplicarInput(senhaField);
         TemaEscuro.aplicarBotao(cadastrarBtn);
 
-        // Adicionar componentes com espaçamentos
+        //Adicionar componentes com espaçamentos
         panel.add(nomeLabel);
         panel.add(Box.createVerticalStrut(8));
         panel.add(nomeField);

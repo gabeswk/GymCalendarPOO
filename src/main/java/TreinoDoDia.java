@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class TreinoDoDia {
 
-    private String descricao;         // ex: "Peito" ou "Perna"
-    private Color cor;               // cor associada ao tipo do treino
+    private String descricao;
+    private Color cor;
     private ArrayList<Exercicio> exercicios = new ArrayList<>();
     private boolean concluido;
 
@@ -15,7 +15,7 @@ public class TreinoDoDia {
 
     public TreinoDoDia(String descricao) {
         this.descricao = descricao;
-        this.cor = Color.GRAY; // cor padrão para manter consistência
+        this.cor = Color.GRAY;
     }
 
     public String getDescricao() {
