@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.util.HashMap;
 import java.util.Map;
-
+//Equipe: Antonio Gabriel de Sousa Xavier
+//Gabriel Holanda Cunha
+//Arisnaldo Rodrigues de Lima
 public class Exec {
     public static void abrirTelaInicial() {
         SwingUtilities.invokeLater(() -> {
