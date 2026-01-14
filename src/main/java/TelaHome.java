@@ -276,11 +276,12 @@ public class TelaHome extends JFrame {
 
             for (LocalDate dt : datas) {
                 if (RepositorioTreinos.existeTreino(usuarioEmail, dt)) {
-                    // Opcional: Avisar conflito ou pular
                     continue;
                 }
-                RepositorioTreinos.salvarTreino(usuarioEmail, dt, new TreinoDoDia(nome, cor));
+
+                RepositorioTreinos.salvarTreino(usuarioEmail, dt, nome);
             }
+
 
             DialogoEscuro.mostrarMensagem(this, "Agendado!");
             atualizarPainelDireito(start);

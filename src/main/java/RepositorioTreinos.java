@@ -27,14 +27,17 @@ public class RepositorioTreinos {
      * Retorna todos os treinos do usuário para gerar as estatísticas.
      */
     public static Map<LocalDate, TreinoDoDia> listar(String email) {
-        // Retorna o mapa de treinos ou um mapa vazio se o usuário não tiver nada
-        // (Isso evita erros de NullPointerException na tela de relatório)
         return treinosPorUsuario.getOrDefault(email, new HashMap<>());
     }
 
     // --- Métodos de Escrita ---
 
     public static void salvarTreino(String email, LocalDate data, TreinoDoDia treino) {
+        getMapaUsuario(email).put(data, treino);
+    }
+
+    public static void salvarTreino(String email, LocalDate data, String descricao) {
+        TreinoDoDia treino = new TreinoDoDia(descricao);
         getMapaUsuario(email).put(data, treino);
     }
 
@@ -47,7 +50,6 @@ public class RepositorioTreinos {
 
         if (mapa == null) return;
 
-        // Remove todos os treinos que tenham a descrição igual
         mapa.entrySet().removeIf(entry ->
                 entry.getValue().getDescricao().equalsIgnoreCase(descricao)
         );
